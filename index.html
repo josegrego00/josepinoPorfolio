@@ -316,35 +316,47 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Sistema de Gestión Estudiantil - Detalles</h5>
+                <h5 class="modal-title">Sistema HIDS (Host-based Intrusion Detection System)</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <h6>Descripción Completa:</h6>
-                <p>Sistema web completo para la gestión integral de instituciones educativas. Permite el registro y administración de estudiantes, materias, calificaciones y generación de reportes académicos.</p>
-                
-                <h6 class="mt-4">Características principales:</h6>
-                <ul>
-                    <li>CRUD completo de estudiantes y materias</li>
-                    <li>Interfaz web responsive con Bootstrap</li>
-                    <li>Persistencia de datos con EclipseLink y MySQL</li>
-                    <li>Arquitectura MVC bien definida</li>
-                    <li>Validaciones de datos y manejo de errores</li>
-                </ul>
-                
-                <h6 class="mt-4">Tecnologías utilizadas:</h6>
-                <div class="d-flex flex-wrap gap-2">
-                    <span class="badge bg-primary">Java</span>
-                    <span class="badge bg-success">Servlets</span>
-                    <span class="badge bg-info">MySQL</span>
-                    <span class="badge bg-warning">EclipseLink</span>
-                    <span class="badge bg-dark">HTML/CSS</span>
-                    <span class="badge bg-secondary">Bootstrap</span>
-                    <span class="badge bg-danger">MVC</span>
+                 <p>Sistema HIDS (Host-based Intrusion Detection System) desarrollado con <strong>Spring Boot</strong> que simula un entorno de seguridad empresarial. Implementa arquitectura de agente-servidor para monitoreo de eventos de seguridad.</p>
+
+                <!-- Características destacadas -->
+                <h6 class="mt-4">🎯 Características Principales:</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="features-list">
+                            <li><i class="fas fa-robot text-primary me-2"></i><strong>Agente simulado</strong> que genera eventos cada 15s</li>
+                            <li><i class="fas fa-chart-line text-success me-2"></i><strong>Dashboard en tiempo real</strong> con auto-refresh</li>
+                            <li><i class="fas fa-database text-warning me-2"></i><strong>Persistencia en MySQL</strong> con Spring Data JPA</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="features-list">
+                            <li><i class="fas fa-ship text-info me-2"></i><strong>Completamente dockerizado</strong> (Docker Compose)</li>
+                            <li><i class="fas fa-bolt text-danger me-2"></i><strong>API REST completa</strong> (CRUD de eventos)</li>
+                            <li><i class="fas fa-shield-alt text-secondary me-2"></i><strong>Clasificación por severidad</strong> (CRITICAL, HIGH, MEDIUM, LOW)</li>
+                        </ul>
+                    </div>
                 </div>
+                  <!-- Tecnologías -->
+                <h6 class="mt-4">🛠️ Stack Tecnológico:</h6>
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="badge bg-primary">Java 17</span>
+                    <span class="badge bg-success">Spring Boot 3.5</span>
+                    <span class="badge bg-info">MySQL 8.0</span>
+                    <span class="badge bg-warning">Spring Data JPA</span>
+                    <span class="badge bg-dark">Thymeleaf</span>
+                    <span class="badge bg-secondary">Bootstrap 5</span>
+                    <span class="badge bg-danger">Docker</span>
+                    <span class="badge bg-info">Docker Compose</span>
+                </div>
+
             </div>
             <div class="modal-footer">
-                <a href="https://github.com/josegrego00/GestionEstudiantesTecnico" class="btn btn-primary" target="_blank">
+                <a href="https://github.com/josegrego00/Sistema-HIDS-con-Spring-Boot-Docker-y-MySQL" class="btn btn-primary" target="_blank">
                     <i class="fab fa-github me-1"></i> Ver Repositorio
                 </a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -380,44 +392,46 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Sistema de Gestión de Inventario - Detalles</h5>
+                <h5 class="modal-title">Sistema de Gestión para Restaurante</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <h6>Descripción Completa:</h6>
-                  <p>Sistema HIDS (Host-based Intrusion Detection System) desarrollado con <strong>Spring Boot</strong> que simula un entorno de seguridad empresarial. Implementa arquitectura de agente-servidor para monitoreo de eventos de seguridad.</p>
+                <p>Aplicación web completa para la gestión integral de un restaurante, desarrollada con <strong>Spring Boot</strong> y tecnologías front-end modernas.</p>
+                
                 <h6 class="mt-4">Características principales:</h6>
                 <ul>
-                     <li><i class="fas fa-robot text-primary me-2"></i><strong>Agente simulado</strong> que genera eventos cada 15s</li>
-                            <li><i class="fas fa-chart-line text-success me-2"></i><strong>Dashboard en tiempo real</strong> con auto-refresh</li>
-                            <li><i class="fas fa-database text-warning me-2"></i><strong>Persistencia en MySQL</strong> con Spring Data JPA</li>
-               
-               
-                        </ul>
+                    <li><i class="fas fa-shield-alt text-primary me-2"></i><strong>Sistema de seguridad robusto</strong> con autenticación de dos factores (2FA)</li>
+                    <li><i class="fas fa-utensils text-success me-2"></i><strong>Gestión completa de recetas</strong> con formularios optimizados</li>
+                    <li><i class="fas fa-boxes text-warning me-2"></i><strong>Control de inventario de ingredientes</strong> con operaciones CRUD</li>
+                    <li><i class="fas fa-lock text-danger me-2"></i><strong>Control de acceso por roles</strong> implementado con Spring Security</li>
+                </ul>
                 
                 <h6 class="mt-4">Tecnologías utilizadas:</h6>
                 <div class="d-flex flex-wrap gap-2">
-                    <span class="badge bg-primary">Java 17</span>
-                    <span class="badge bg-success">Spring Boot 3.5</span>
-                    <span class="badge bg-info">MySQL 8.0</span>
-                    <span class="badge bg-warning">Spring DATA JPA</span>
-                    <span class="badge bg-dark">Bootstrap</span>
-                    <span class="badge bg-dark">Thymeleaf</span>
-                     <span class="badge bg-danger">Docker</span>
-                    <span class="badge bg-info">Docker Compose</span>
-                    
+                    <span class="badge bg-primary">Java</span>
+                    <span class="badge bg-success">Spring Boot</span>
+                    <span class="badge bg-danger">Spring Security</span>
+                    <span class="badge bg-warning">Spring Data JPA</span>
+                    <span class="badge bg-info">HTML5</span>
+                    <span class="badge bg-purple">CSS3</span>
+                    <span class="badge bg-warning text-dark">JavaScript</span>
+                    <span class="badge bg-dark">Maven</span>
+                    <span class="badge bg-secondary">Bootstrap</span>
                 </div>
+                
+                <h6 class="mt-4">Arquitectura:</h6>
+                <p>Aplicación web con arquitectura MVC, separación clara entre backend (Java/Spring) y frontend (HTML/CSS/JS), construida con Maven.</p>
             </div>
             <div class="modal-footer">
                 <a href="https://github.com/josegrego00/SistemaRestaurante" class="btn btn-primary" target="_blank">
-                    <i class="fab fa-github me-1"></i> Ver Repositorio
+                    <i class="fab fa-github me-1"></i> Ver Repositorio GitHub
                 </a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
-</div>
- <!-- Proyecto 3 - Sistema de Métodos de Pago -->
+</div> <!-- Proyecto 3 - Sistema de Métodos de Pago -->
 <div class="col-md-6 col-lg-4">
     <div class="project-card">
         <div class="project-image">
