@@ -1,126 +1,212 @@
-// Smooth scrolling para los enlaces de navegación
-function initSmoothScroll() {
-    const navLinks = document.querySelectorAll('.nav-link');
+// Esperar a que el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', function() {
+    // Navbar scroll effect
+    const navbar = document.querySelector('.navbar');
     
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Navegación suave
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
             e.preventDefault();
             
             const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
+            if (targetId === '#') return;
             
-            if (targetSection) {
-                const offsetTop = targetSection.offsetTop - 70;
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                // Cerrar navbar en móviles
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                if (navbarCollapse.classList.contains('show')) {
+                    const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+                    bsCollapse.hide();
+                }
+                
+                // Scroll suave
+                const navbarHeight = navbar.offsetHeight;
+                const targetPosition = targetElement.offsetTop - navbarHeight;
                 
                 window.scrollTo({
-                    top: offsetTop,
+                    top: targetPosition,
                     behavior: 'smooth'
                 });
             }
         });
     });
-}
 
-// Animación para las barras de progreso
-function initSkillAnimations() {
-    const skillCards = document.querySelectorAll('.skill-card');
+    // Actualizar nav activo según scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
     
+    function updateActiveNav() {
+        const scrollPosition = window.scrollY + 100;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', updateActiveNav);
+    updateActiveNav(); // Llamar una vez al cargar
+
+    // Animación de barras de habilidades
+    function animateSkillBars() {
+        const skillBars = document.querySelectorAll('.progress-bar');
+        skillBars.forEach(bar => {
+            const width = bar.style.width;
+            bar.style.width = '0';
+            
+            setTimeout(() => {
+                bar.style.width = width;
+            }, 300);
+        });
+    }
+
+    // Observer para animaciones
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const progressBars = entry.target.querySelectorAll('.progress-bar');
-                progressBars.forEach(bar => {
-                    const width = bar.style.width;
-                    bar.style.width = '0';
-                    setTimeout(() => {
-                        bar.style.width = width;
-                    }, 300);
-                });
+                entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                
+                // Animar barras de habilidades si es la sección de habilidades
+                if (entry.target.id === 'habilidades') {
+                    setTimeout(animateSkillBars, 500);
+                }
             }
         });
-    }, { threshold: 0.5 });
-    
-    skillCards.forEach(card => {
-        observer.observe(card);
+    }, observerOptions);
+
+    // Observar elementos
+    document.querySelectorAll('.skill-card, .project-card, .study-item').forEach(el => {
+        observer.observe(el);
     });
-}
 
-// Efecto de escritura en el hero
-function initTypeWriter() {
-    const heroText = document.querySelector('.hero-section h1');
-    if (heroText) {
-        const text = heroText.textContent;
-        heroText.textContent = '';
-        
-        let i = 0;
-        const typeWriter = () => {
-            if (i < text.length) {
-                heroText.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        };
-        
-        // Iniciar efecto después de 1 segundo
-        setTimeout(typeWriter, 1000);
-    }
-}
-
-// Formspree Integration - FUNCIONAL
-function initContactForm() {
-    const form = document.getElementById("contact");
-    const status = document.getElementById("form-status");
+    // Manejo del formulario de contacto
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('form-status');
     
-    if (form) {
-        form.addEventListener("submit", async (e) => {
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Mostrar estado de carga
-            status.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div> Enviando mensaje...';
-            status.className = 'mt-3 text-center text-info';
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
             
-            const data = new FormData(form);
+            // Cambiar texto del botón
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Enviando...';
+            submitButton.disabled = true;
             
-            try {
-                const response = await fetch(form.action, {
-                    method: form.method,
-                    body: data,
-                    headers: { 
-                        'Accept': 'application/json'
-                    }
-                });
+            // Simular envío (en producción usaría fetch real)
+            setTimeout(() => {
+                formStatus.innerHTML = '<div class="alert alert-success">¡Mensaje enviado exitosamente! Te responderé pronto.</div>';
+                contactForm.reset();
                 
-                if (response.ok) {
-                    status.innerHTML = "✅ ¡Tu mensaje ha sido enviado con éxito! Te contactaré pronto.";
-                    status.className = 'mt-3 text-center text-success';
-                    form.reset();
-                    
-                    // Ocultar mensaje después de 5 segundos
-                    setTimeout(() => {
-                        status.innerHTML = '';
-                    }, 5000);
-                } else {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'Error en la respuesta del servidor');
-                }
-            } catch (error) {
-                console.error('Error completo:', error);
-                status.innerHTML = "❌ Ocurrió un error al enviar el mensaje. Por favor, inténtalo de nuevo.";
-                status.className = 'mt-3 text-center text-danger';
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
                 
-                // Mostrar detalles del error en consola
-                if (error.message) {
-                    console.error('Mensaje de error:', error.message);
-                }
-            }
+                // Ocultar mensaje después de 5 segundos
+                setTimeout(() => {
+                    formStatus.innerHTML = '';
+                }, 5000);
+            }, 1500);
         });
     }
-}
 
-// Inicializar todo cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', function() {
-    initSmoothScroll();
-    initSkillAnimations();
-    initTypeWriter();
-    initContactForm();
+    // Tooltips para badges
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    if (tooltipTriggerList.length > 0) {
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+    }
+
+    // Configurar carruseles
+    const carousels = document.querySelectorAll('.carousel');
+    carousels.forEach(carousel => {
+        // Pausar carrusel al pasar el mouse
+        carousel.addEventListener('mouseenter', () => {
+            carousel.setAttribute('data-bs-ride', 'false');
+        });
+        
+        carousel.addEventListener('mouseleave', () => {
+            carousel.setAttribute('data-bs-ride', 'carousel');
+        });
+    });
+
+    // Efecto de escritura para el hero (opcional)
+    function typeWriterEffect() {
+        const heroTitle = document.querySelector('.hero-section h1');
+        if (heroTitle) {
+            const text = heroTitle.textContent;
+            heroTitle.textContent = '';
+            
+            let i = 0;
+            const speed = 50; // velocidad en ms
+            
+            function typeWriter() {
+                if (i < text.length) {
+                    heroTitle.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+            }
+            
+            // Iniciar efecto después de un breve retraso
+            setTimeout(typeWriter, 500);
+        }
+    }
+    
+    // Iniciar efecto de escritura solo si no hay movimiento de scroll rápido
+    let isScrolling;
+    window.addEventListener('scroll', function() {
+        window.clearTimeout(isScrolling);
+        isScrolling = setTimeout(function() {
+            if (window.scrollY === 0) {
+                typeWriterEffect();
+            }
+        }, 100);
+    });
+
+    // Año actual en el footer
+    const yearSpan = document.querySelector('footer .container .row .col-md-6 p');
+    if (yearSpan) {
+        const currentYear = new Date().getFullYear();
+        yearSpan.textContent = yearSpan.textContent.replace('2025', currentYear);
+    }
+
+    // Preloader simple (opcional)
+    function hidePreloader() {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 300);
+            }, 500);
+        }
+    }
+    
+    // Llamar al preloader cuando la página esté cargada
+    window.addEventListener('load', hidePreloader);
 });
